@@ -1,474 +1,1533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mastering the Pause: Professional Work Phrases</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXTATION - Mastering the Pause: The 'Bear with Me' Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for dark mode and light text gradient */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        
+        /* src/assets/styles/_variables.scss */
+        :root {
+            /* Core backgrounds */
+            --bg-main: #02030b; /* Page background */
+            --bg-gradient: radial-gradient(circle at top, #1c1f3b 0%, #050716 45%, #02030b 100%);
+            /* Surfaces / Cards */
+            --card-bg: rgba(15, 18, 40, 0.92); /* Lesson panels */
+            --card-soft-bg: rgba(18, 21, 50, 0.88); /* Tab cards and navigation buttons */
+            /* Neon accents */
+            --accent-cyan: #4ef2ff; /* Cyan highlight around edges */
+            --accent-pink: #ff2f92; /* Magenta highlight for buttons */
+            --accent-green: #4dff9b; /* Success / tab completed mark */
+            --accent-yello: #ffe25f; /* Accent blended in text gradients */
+            --accent-purple: #aa5dff; /* Hover glows and edges */
+            /* Text and borders */
+            --muted: rgba(255,255,255,0.65);
+            --border-glow: rgba(120,120,255,0.45);
+            /* Shadows */
+            --shadow-strong: 0 0 36px rgba(130,80,255,0.6);
+            --shadow-soft: 0 0 20px rgba(0,0,0,0.65);
+            /* Radii and transitions */
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --transition-fast: 0.18s ease-out;
+            --transition-med: 0.28s ease-out;
+        }
+
+        /* src/assets/styles/global.scss */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* GitHub Dark Mode Background */
-            color: #c9d1d9;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-main);
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        .text-gradient {
-            background-image: linear-gradient(to right, #93c5fd, #c084fc);
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        p {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(78, 242, 255, 0.5);
+            }
+        }
+
+        input[type="text"], textarea {
+            background: rgba(2,6,32,0.95);
+            border: 1px solid rgba(178,75,243,0.45);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            padding: 0.8rem 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+            &:focus {
+                outline: none;
+                border-color: rgba(178,75,243,0.8);
+                box-shadow: 0 0 10px rgba(178,75,243,0.6);
+            }
+
+            &::placeholder {
+                color: rgba(255,255,255,0.3);
+            }
+        }
+
+        .no-video {
+            border: 1px dashed rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.75);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+
+            .emoji {
+                font-size: 1.5rem;
+            }
+        }
+
+        .emoji {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.3em;
+        }
+
+        .tab-content {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .no-content-message {
+            color: var(--muted);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            margin-top: 3rem;
+        }
+
+        /* Mixins for buttons - defined directly here for single HTML file */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-yello), var(--accent-cyan));
+            color: var(--bg-main);
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-sm);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: 0 0 25px rgba(255, 47, 146, 0.5);
+
+            &:hover {
+                transform: translateY(-2px) scale(1.02);
+                box-shadow: 0 0 35px rgba(255, 47, 146, 0.7);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                box-shadow: none;
+                transform: none;
+            }
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--card-soft-bg), var(--bg-main));
+            color: rgba(255,255,255,0.85);
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-sm);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(120,120,255,0.3);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+
+            &:hover {
+                transform: translateY(-2px) scale(1.02);
+                border-color: var(--accent-purple);
+                box-shadow: 0 0 20px rgba(170, 93, 255, 0.4);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                box-shadow: none;
+                transform: none;
+            }
+        }
+
+        /* LessonView.vue styles */
+        .lesson-view {
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .teacher-orb {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 20%, #ffffff, transparent 60%),
+                        radial-gradient(circle at 70% 80%, #00fff0, transparent 55%),
+                        radial-gradient(circle at 50% 50%, #ff2f92, transparent 65%);
+            box-shadow: 0 0 15px rgba(0,255,255,0.7), 0 0 25px rgba(255,0,160,0.55);
+            margin: 0 auto 1rem;
+            animation: orb-glow 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes orb-glow {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(0,255,255,0.7), 0 0 25px rgba(255,0,160,0.55); }
+            100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,255,255,0.9), 0 0 40px rgba(255,0,160,0.7); }
+        }
+
+        .brand-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            text-shadow: 0 0 20px rgba(78, 242, 255, 0.8);
         }
-        .exercise-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -2px rgba(139, 92, 246, 0.1);
+
+        .brand-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.5rem;
+        }
+
+        .lesson-pill {
+            background: linear-gradient(90deg, rgba(8,235,255,0.25), rgba(255,0,168,0.2));
+            border: 1px solid rgba(142,255,255,0.4);
+            border-radius: var(--radius-lg);
+            padding: 0.5rem 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            margin-top: 1.5rem;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(78, 242, 255, 0.3);
+        }
+
+        .lesson-main-panel {
+            background: linear-gradient(135deg, rgba(13,16,40,0.98), rgba(6,8,26,0.98));
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: var(--shadow-strong);
+            position: relative;
+            z-index: 5;
+            border: 1px solid var(--border-glow);
+            overflow: hidden;
+        }
+
+        .panel-radial-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(87,57,255,0.35), transparent 58%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .panel-title {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(78, 242, 255, 0.5);
+        }
+
+        .panel-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            color: rgba(255,255,255,0.45);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tab-content-wrapper {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin-top: 2rem;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(120,120,255,0.2);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .app-footer {
+            margin-top: 3rem;
+            color: rgba(255,255,255,0.55);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .highlight-name {
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .lesson-view { padding: 1rem; }
+            .lesson-header { margin-bottom: 2rem; }
+            .brand-title { font-size: 2.5rem; }
+            .brand-subtitle { font-size: 1rem; }
+            .lesson-main-panel { padding: 1.5rem; }
+            .panel-title { font-size: 1.5rem; }
+            .panel-subtitle { font-size: 1rem; }
+            .tab-content-wrapper { padding: 1.5rem; min-height: 300px; }
+            .lesson-footer { flex-direction: column; gap: 1rem; max-width: 300px; }
+        }
+
+        /* TabNavigation.vue styles */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-item {
+            background: radial-gradient(circle at top, rgba(255,255,255,0.09), rgba(7,10,28,0.96));
+            border: 1px solid rgba(130,140,200,0.4);
+            border-radius: var(--radius-md);
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+
+            &:hover {
+                border-color: rgba(120,120,255,0.6);
+                box-shadow: 0 0 20px rgba(120,120,255,0.35);
+                color: white;
+                transform: translateY(-2px) scale(1.01);
+            }
+
+            &.active {
+                background: radial-gradient(circle at top, rgba(255,255,255,0.15), rgba(21,13,51,0.98));
+                border-color: rgba(103,255,196,0.9);
+                box-shadow: 0 0 24px rgba(79,255,204,0.55);
+                color: white;
+                transform: translateY(-2px);
+            }
+
+            .tab-number {
+                background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: bold;
+                margin-right: 0.5rem;
+                font-size: 1.1em;
+            }
+
+            .checkmark {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: var(--accent-green);
+                color: var(--bg-main);
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8rem;
+                font-weight: bold;
+                box-shadow: 0 0 10px rgba(77, 255, 179, 0.7);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tab-navigation { flex-direction: column; gap: 0.5rem; }
+            .tab-item { width: 100%; justify-content: center; padding: 0.6rem 1rem; font-size: 0.9rem; }
+        }
+
+        /* Tab2Expression.vue styles */
+        .expression-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .expression-input-wrapper {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .expression-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem 1.5rem;
+            font-size: 1.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(170, 93, 255, 0.5);
+            color: #fff;
+            transition: border-color var(--transition-fast);
+
+            &:focus {
+                outline: none;
+                border-color: var(--accent-cyan);
+            }
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.3);
+            }
+
+            &.locked-text {
+                background: linear-gradient(120deg, var(--accent-yello), var(--accent-pink), var(--accent-cyan));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                border-bottom: 2px solid var(--accent-green);
+                cursor: default;
+            }
+        }
+
+        .lock-button {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--card-soft-bg);
+            border: 1px solid rgba(120, 120, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 1rem;
+            color: var(--muted);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+
+            &:hover {
+                border-color: var(--accent-purple);
+                color: white;
+            }
+        }
+
+        .toast-message {
+            background: rgba(0, 0, 0, 0.4);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.7; }
+        }
+
+        /* Tab3WhenToUse.vue styles */
+        .when-to-use-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .when-to-use-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .pronunciation-block {
+            background: linear-gradient(90deg, rgba(0,0,0,0.75), rgba(28,32,80,0.95));
+            border: 1px solid rgba(78,242,255,0.6);
+            border-radius: var(--radius-md);
+            padding: 1rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .pronunciation-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            color: var(--accent-cyan);
+            letter-spacing: 0.05em;
+        }
+
+        .play-button {
+            background: transparent;
+            border: 1px dashed rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.8);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+
+            &:hover {
+                border-color: var(--accent-pink);
+                color: white;
+            }
+        }
+
+        /* Tab3Situations.vue styles */
+        .situations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .situation-card {
+            background: radial-gradient(circle at top, rgba(255,255,255,0.06), rgba(3,5,24,0.96));
+            border: 1px solid rgba(178,75,243,0.45);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: 0 0 18px rgba(0,0,0,0.85);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+
+            &:hover {
+                border-color: rgba(255,160,255,0.9);
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 0 25px rgba(255,160,255,0.3);
+            }
+        }
+
+        .situation-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent-purple);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 0 10px rgba(170, 93, 255, 0.4);
+        }
+
+        .situation-card p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.92);
+            margin-bottom: 0.5rem;
+        }
+
+        .situation-card .context {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.76);
+            font-style: italic;
+        }
+
+        /* Tab4WriteSequence.vue styles */
+        .write-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .writing-prompt {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .writing-textarea {
+            width: 100%;
+            max-width: 700px;
+            min-height: 200px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .char-count {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: right;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Tab6BilingualMatch.vue styles */
+        .match-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .column h3 {
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .match-card {
+            background: var(--card-soft-bg);
+            border: 1px solid rgba(120, 120, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.8rem 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            cursor: grab;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+            color: rgba(255, 255, 255, 0.9);
+            user-select: none;
+
+            &:hover {
+                transform: translateY(-4px) scale(1.02);
+                border-color: var(--accent-pink);
+                box-shadow: 0 0 20px rgba(255, 47, 146, 0.3);
+            }
+
+            &.matched {
+                border-color: var(--accent-green);
+                background: rgba(77, 255, 155, 0.1);
+                color: var(--accent-green);
+                cursor: default;
+            }
+        }
+
+        /* Tab7ReorderSequence.vue styles */
+        .reorder-container {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .sentence-display {
+            background: var(--card-bg);
+            border: 1px solid rgba(120, 120, 255, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .word-slot {
+            display: inline-block;
+            min-width: 80px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(170, 93, 255, 0.5);
+            border-radius: var(--radius-sm);
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            color: var(--accent-purple);
+            transition: all var(--transition-fast);
+
+            &.filled {
+                border-style: solid;
+                border-color: var(--accent-cyan);
+                background: rgba(78, 242, 255, 0.1);
+                color: var(--accent-cyan);
+            }
+
+            &.correct {
+                border-color: var(--accent-green);
+                background: rgba(77, 255, 155, 0.1);
+                color: var(--accent-green);
+            }
+        }
+
+        .word-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .option-word {
+            background: var(--card-soft-bg);
+            border: 1px solid rgba(120, 120, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.6rem 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: grab;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+            color: rgba(255, 255, 255, 0.9);
+            user-select: none;
+
+            &:hover {
+                transform: translateY(-4px) scale(1.02);
+                border-color: var(--accent-pink);
+                box-shadow: 0 0 20px rgba(255, 47, 146, 0.3);
+            }
+
+            &.used {
+                opacity: 0.4;
+                cursor: default;
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        /* Tab8DragDropBoxes.vue styles */
+        .fill-blanks-container {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .sentence-block {
+            background: var(--card-bg);
+            border: 1px solid rgba(120, 120, 255, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .sentence-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .blank-box {
+            display: inline-block;
+            min-width: 100px;
+            height: 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(170, 93, 255, 0.5);
+            border-radius: var(--radius-sm);
+            vertical-align: middle;
+            margin: 0 0.5rem;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            color: var(--accent-purple);
+            transition: all var(--transition-fast);
+
+            &.filled {
+                border-style: solid;
+                border-color: var(--accent-cyan);
+                background: rgba(78, 242, 255, 0.1);
+                color: var(--accent-cyan);
+            }
+
+            &.correct {
+                border-color: var(--accent-green);
+                background: rgba(77, 255, 155, 0.1);
+                color: var(--accent-green);
+            }
+        }
+
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .option-card {
+            background: var(--card-soft-bg);
+            border: 1px solid rgba(120, 120, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.6rem 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: grab;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+            color: rgba(255, 255, 255, 0.9);
+            user-select: none;
+
+            &:hover {
+                transform: translateY(-4px) scale(1.02);
+                border-color: var(--accent-pink);
+                box-shadow: 0 0 20px rgba(255, 47, 146, 0.3);
+            }
+
+            &.used {
+                opacity: 0.4;
+                cursor: default;
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        .completion-message {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(77, 255, 155, 0.15), rgba(15, 18, 40, 0.92));
+            border: 1px solid var(--accent-green);
+            border-radius: var(--radius-md);
+            box-shadow: 0 0 25px rgba(77, 255, 155, 0.4);
+            display: inline-block;
+
+            p {
+                font-size: 1.2rem;
+                color: #fff;
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen bg-gray-900 p-4 sm:p-8">
+<body>
+    <div id="app">
+        <!-- This is where your Vue.js application would mount -->
+        <!-- The content below is a static representation of LessonView.vue for illustration -->
+        <div class="lesson-view">
+            <header class="lesson-header">
+                <div class="teacher-orb"></div>
+                <h1 class="brand-title">NEXTATION</h1>
+                <p class="brand-subtitle">Your Futuristic English Learning Hub</p>
+                <div class="lesson-pill">
+                    Lesson: Mastering the Pause: The 'Bear with Me' Guide
+                </div>
+            </header>
 
-    <header class="text-center mb-10 p-6 bg-gray-800 rounded-2xl shadow-xl max-w-4xl mx-auto border-b border-gray-700">
-        <h1 class="text-4xl font-extrabold mb-2 text-gradient">
-            Mastering the Pause: The 'Bear with Me' Guide
-        </h1>
-        <p class="text-xl text-gray-400">
-            Walkthrough of professional English phrases for momentary delays at work.
-        </p>
-        <p class="text-lg font-semibold text-indigo-400 mt-2">
-            Com equivalentes em Português Brasileiro para facilitar o aprendizado.
-        </p>
-    </header>
+            <main class="lesson-main-panel">
+                <div class="panel-radial-accent"></div>
+                <h2 class="panel-title">Today's Expression</h2>
+                <p class="panel-subtitle">Bear with me just a second while I pull up the latest report.</p>
 
-    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- Scenario List (Left/Top) -->
-        <section id="scenario-list-section" class="lg:col-span-2 space-y-6">
-            <h2 class="text-2xl font-bold text-gray-300 border-b border-gray-700 pb-2 mb-4">Workplace Situations</h2>
-            <div id="scenario-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Cards will be injected here by JavaScript -->
-            </div>
-        </section>
+                <nav class="tab-navigation">
+                    <button class="tab-item active">
+                        <span class="tab-number">1</span>
+                        <span class="tab-title">Expression</span>
+                    </button>
+                    <button class="tab-item">
+                        <span class="tab-number">2</span>
+                        <span class="tab-title">When to Use</span>
+                    </button>
+                    <button class="tab-item">
+                        <span class="tab-number">3</span>
+                        <span class="tab-title">Situations</span>
+                    </button>
+                    <button class="tab-item">
+                        <span class="tab-number">4</span>
+                        <span class="tab-title">Write</span>
+                    </button>
+                    <!-- Tab 5 (Practice) has been removed -->
+                    <button class="tab-item">
+                        <span class="tab-number">5</span>
+                        <span class="tab-title">Bilingual Match</span>
+                    </button>
+                    <button class="tab-item">
+                        <span class="tab-number">6</span>
+                        <span class="tab-title">Reorder Sequence</span>
+                    </button>
+                    <button class="tab-item">
+                        <span class="tab-number">7</span>
+                        <span class="tab-title">Fill the Blanks</span>
+                    </button>
+                </nav>
 
-        <!-- Detail View (Right/Bottom) -->
-        <section class="lg:col-span-1">
-            <div class="sticky top-8">
-                <h2 id="detail-title" class="text-2xl font-bold text-gray-300 border-b border-gray-700 pb-2 mb-4">
-                    Select a Scenario
-                </h2>
-                <div id="detail-view-container" class="min-h-64">
-                    <div class="p-6 bg-gray-800 rounded-xl shadow-xl text-center h-full flex flex-col justify-center items-center text-gray-400 border-4 border-dashed border-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="mb-3"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/></svg>
-                        <p class="font-medium">Clique em um dos cartões ao lado para iniciar a lição e ver o equivalente em Português.</p>
+                <div class="tab-content-wrapper">
+                    <!-- Initial content for Tab 1: Expression -->
+                    <div class="expression-content tab-content">
+                        <h2 class="tab-title">Expression <span class="emoji">💬</span></h2>
+                        <p class="tab-description">Focus on the core phrase and its meaning.</p>
+                        <div class="expression-input-wrapper">
+                            <input type="text" class="expression-input locked-text" value="Bear with me just a second while I pull up the latest report." readonly />
+                            <button class="lock-button">Unlock</button>
+                        </div>
+                        <div class="toast-message">
+                            <span class="pulse-dot"></span> Locked • Saved locally
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <!-- Advanced Exercises (Full Width) -->
-        <section id="advanced-exercises" class="lg:col-span-3 mt-10">
-            <h2 class="text-3xl font-extrabold text-gradient border-b border-gray-700 pb-3 mb-6">Advanced Exercises</h2>
-            <div class="p-8 bg-gray-800 rounded-2xl shadow-xl">
-                <h3 class="text-xl font-bold text-white mb-4">Matching Game: Find the Equivalent!</h3>
-                <p class="text-gray-400 mb-6">Match the English phrase/alternative (Left) with the correct Brazilian Portuguese equivalent (Right).</p>
-                <div id="matching-game-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Exercise content will be generated here -->
-                </div>
-                <div id="matching-feedback" class="mt-6 text-center text-lg font-semibold min-h-6"></div>
-            </div>
-        </section>
 
-    </main>
-    
-    <!-- Footer -->
-    <div class="max-w-4xl mx-auto mt-12 p-6 text-center text-gray-600 text-sm pt-4">
-        <p class="font-mono tracking-widest text-lg text-gray-700">Daby</p>
+                <div class="lesson-footer">
+                    <button class="btn-secondary">Back</button>
+                    <button class="btn-primary">Continue</button>
+                </div>
+            </main>
+
+            <footer class="app-footer">
+                <p>Created and projected by <span class="highlight-name">VISHUL</span> for adult ADHD learners.</p>
+            </footer>
+        </div>
     </div>
 
-    <script>
-        const scenarios = [
-            {
-                id: 1,
-                category: "A. Looking for Information",
-                englishPhrase: "Bear with me just a second while I [[pull up the latest report]].",
-                portugueseEquivalent: "Só um momento, enquanto eu abro o relatório mais recente.",
-                context: "When you need a quick second to locate data or a document during a live call.",
-                type: "Direct Usage",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-cyan-400"><path d="m21 21-4.3-4.3"/><path d="M11 20a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/></svg>',
-                walkthrough: {
-                    term: "pull up the latest report",
-                    explanation: "This means to retrieve or open the document from a system or server. It's often used in corporate settings, especially in meetings.",
-                    portuguese: "significa 'abrir/puxar' o documento (relatório) de um sistema ou do computador. Outras formas: 'achar o documento', 'abrir o arquivo'."
+    <script type="module">
+        // Embedded Lesson Data (from public/data/lesson-bear-with-me.json)
+        const lessonData = {
+            "id": "lesson-bear-with-me",
+            "title": "Mastering the Pause: The 'Bear with Me' Guide",
+            "description": "Walkthrough of professional English phrases for momentary delays at work. Com equivalentes em Português Brasileiro para facilitar o aprendizado. Clique em um dos cartões ao lado para iniciar a lição e ver o equivalente em Português.",
+            "expressions": [
+                {
+                    "id": "bear-with-me-info",
+                    "expression": "Bear with me just a second while I pull up the latest report.",
+                    "pronunciation": "/bɛr wɪð mi dʒʌst ə ˈsɛkənd waɪl aɪ pʊl ʌp ðə ˈleɪtɪst rɪˈpɔrt/",
+                    "whenToUse": "Use this when you need a brief moment to find or access information during a conversation or meeting.",
+                    "situations": [
+                        {
+                            "situation": "Looking for Information",
+                            "example": "Manager: 'What are the Q4 sales figures?' You: 'Bear with me just a second while I pull up the latest report.'",
+                            "context": "Politely requests a short delay to retrieve data."
+                        }
+                    ],
+                    "writingPrompt": "Write an email to a colleague explaining you need a moment to find a document, using 'bear with me'.",
+                    "practicePrompt": "Record yourself saying the phrase with a polite, slightly apologetic tone.",
+                    "bilingualMatches": [
+                        { "english": "Bear with me", "portuguese": "Tenha paciência comigo" },
+                        { "english": "Just a second", "portuguese": "Só um segundo" },
+                        { "english": "Pull up", "portuguese": "Puxar / Abrir" },
+                        { "english": "Latest report", "portuguese": "Relatório mais recente" },
+                        { "english": "Information", "portuguese": "Informação" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Reorder these words to form the sentence: 'Bear with me just a second'.",
+                        "items": [
+                            { "id": "word1", "text": "Bear", "order": 1 },
+                            { "id": "word2", "text": "with", "order": 2 },
+                            { "id": "word3", "text": "me", "order": 3 },
+                            { "id": "word4", "text": "just", "order": 4 },
+                            { "id": "word5", "text": "a", "order": 5 },
+                            { "id": "word6", "text": "second", "order": 6 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "Please ______ with me while I find the document.",
+                            "options": ["wait", "bear", "hold"],
+                            "correctAnswer": "bear"
+                        },
+                        {
+                            "sentence": "I need to ______ up the report. Bear with me.",
+                            "options": ["bring", "pull", "open"],
+                            "correctAnswer": "pull"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-tech",
+                    "expression": "The dashboard is taking a bit longer to load today – please bear with me.",
+                    "pronunciation": "/ðə ˈdæʃbɔrd ɪz ˈteɪkɪŋ ə bɪt ˈlɔŋɡər tu loʊd təˈdeɪ – pliz bɛr wɪð mi/",
+                    "whenToUse": "Use this when encountering technical difficulties that cause a delay during a presentation or shared screen session.",
+                    "situations": [
+                        {
+                            "situation": "Technical Issues",
+                            "example": "Presenter: 'The dashboard is taking a bit longer to load today – please bear with me.'",
+                            "context": "Acknowledges a technical delay and asks for patience."
+                        }
+                    ],
+                    "writingPrompt": "You're on a video call and your screen share is lagging. Write what you would say using 'bear with me'.",
+                    "practicePrompt": "Record yourself saying the phrase with a calm, professional tone, acknowledging the delay.",
+                    "bilingualMatches": [
+                        { "english": "Technical issues", "portuguese": "Problemas técnicos" },
+                        { "english": "Dashboard", "portuguese": "Painel" },
+                        { "english": "Taking longer", "portuguese": "Demorando mais" },
+                        { "english": "To load", "portuguese": "Carregar" },
+                        { "english": "Please bear with me", "portuguese": "Por favor, tenha paciência comigo" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Arrange these words to form the sentence: 'Please bear with me'.",
+                        "items": [
+                            { "id": "word1", "text": "Please", "order": 1 },
+                            { "id": "word2", "text": "bear", "order": 2 },
+                            { "id": "word3", "text": "with", "order": 3 },
+                            { "id": "word4", "text": "me", "order": 4 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "My internet is slow, so please ______ with me.",
+                            "options": ["wait", "bear", "hold"],
+                            "correctAnswer": "bear"
+                        },
+                        {
+                            "sentence": "The software is ______ a bit longer to open.",
+                            "options": ["taking", "making", "doing"],
+                            "correctAnswer": "taking"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-complexity",
+                    "expression": "This process has a few moving parts, so bear with me while I walk you through it.",
+                    "pronunciation": "/ðɪs ˈprɑsɛs hæz ə fyu ˈmuvɪŋ pɑrts, soʊ bɛr wɪð mi waɪl aɪ wɔk yu θru ɪt/",
+                    "whenToUse": "Use this when explaining a complicated process or concept, asking for the listener's patience as you break it down.",
+                    "situations": [
+                        {
+                            "situation": "Explaining Complexity",
+                            "example": "Trainer: 'This process has a few moving parts, so bear with me while I walk you through it step by step.'",
+                            "context": "Prepares the listener for a detailed, potentially lengthy explanation."
+                        }
+                    ],
+                    "writingPrompt": "Explain a complex task to a new team member, using 'bear with me' to introduce the explanation.",
+                    "practicePrompt": "Record yourself saying the phrase with a clear, instructional, yet patient tone.",
+                    "bilingualMatches": [
+                        { "english": "Moving parts", "portuguese": "Partes móveis / Componentes" },
+                        { "english": "Walk you through", "portuguese": "Guiar você por / Explicar" },
+                        { "english": "Complexity", "portuguese": "Complexidade" },
+                        { "english": "Process", "portuguese": "Processo" },
+                        { "english": "Step by step", "portuguese": "Passo a passo" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Order these words to form: 'Bear with me while I explain'.",
+                        "items": [
+                            { "id": "word1", "text": "Bear", "order": 1 },
+                            { "id": "word2", "text": "with", "order": 2 },
+                            { "id": "word3", "text": "me", "order": 3 },
+                            { "id": "word4", "text": "while", "order": 4 },
+                            { "id": "word5", "text": "I", "order": 5 },
+                            { "id": "word6", "text": "explain", "order": 6 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "This project has many ______ parts, so bear with me.",
+                            "options": ["moving", "complex", "difficult"],
+                            "correctAnswer": "moving"
+                        },
+                        {
+                            "sentence": "I will ______ you through the steps.",
+                            "options": ["walk", "guide", "show"],
+                            "correctAnswer": "walk"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-presentation",
+                    "expression": "Bear with me while I share the correct deck.",
+                    "pronunciation": "/bɛr wɪð mi waɪl aɪ ʃɛr ðə kəˈrɛkt dɛk/",
+                    "whenToUse": "Use this during a presentation when you need to switch materials or correct an error, asking for a brief pause from the audience.",
+                    "situations": [
+                        {
+                            "situation": "Presentation Transition",
+                            "example": "Speaker: 'Apologies, I seem to have opened the wrong file. Bear with me while I share the correct deck.'",
+                            "context": "Manages a smooth transition during a presentation despite a minor hiccup."
+                        }
+                    ],
+                    "writingPrompt": "You're giving a presentation and realize you're on the wrong slide. What do you say to the audience?",
+                    "practicePrompt": "Record yourself saying the phrase with a confident, slightly apologetic, yet in-control tone.",
+                    "bilingualMatches": [
+                        { "english": "Share the deck", "portuguese": "Compartilhar a apresentação" },
+                        { "english": "Correct deck", "portuguese": "Apresentação correta" },
+                        { "english": "Presentation", "portuguese": "Apresentação" },
+                        { "english": "Apologies", "portuguese": "Desculpas" },
+                        { "english": "Wrong file", "portuguese": "Arquivo errado" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Form a sentence: 'Bear with me while I share'.",
+                        "items": [
+                            { "id": "word1", "text": "Bear", "order": 1 },
+                            { "id": "word2", "text": "with", "order": 2 },
+                            { "id": "word3", "text": "me", "order": 3 },
+                            { "id": "word4", "text": "while", "order": 4 },
+                            { "id": "word5", "text": "I", "order": 5 },
+                            { "id": "word6", "text": "share", "order": 6 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "I need to ______ the correct presentation. Bear with me.",
+                            "options": ["show", "share", "display"],
+                            "correctAnswer": "share"
+                        },
+                        {
+                            "sentence": "Please ______ with me as I switch screens.",
+                            "options": ["wait", "bear", "hold"],
+                            "correctAnswer": "bear"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-alternatives",
+                    "expression": "Alternatives: Just a moment / Give me one second / Let me check quickly / Thanks for your patience.",
+                    "pronunciation": "/ˈɔltərnətɪvz: dʒʌst ə ˈmoʊmənt / ɡɪv mi wʌn ˈsɛkənd / lɛt mi tʃɛk ˈkwɪkli / θæŋks fɔr yʊər ˈpeɪʃəns/",
+                    "whenToUse": "These are shorter, more direct phrases to ask for a brief pause, suitable for less formal or very quick delays.",
+                    "situations": [
+                        {
+                            "situation": "Alternatives (Short & Sweet)",
+                            "example": "Colleague: 'Do you have the client's email?' You: 'Just a moment, let me check quickly.'",
+                            "context": "Provides quick options for very short delays."
+                        }
+                    ],
+                    "writingPrompt": "Write a short message to a client using one of the alternative phrases to ask for a quick check.",
+                    "practicePrompt": "Record yourself saying each alternative phrase clearly and concisely.",
+                    "bilingualMatches": [
+                        { "english": "Just a moment", "portuguese": "Só um momento" },
+                        { "english": "Give me one second", "portuguese": "Me dê um segundo" },
+                        { "english": "Let me check quickly", "portuguese": "Deixe-me verificar rapidamente" },
+                        { "english": "Thanks for your patience", "portuguese": "Obrigado pela sua paciência" },
+                        { "english": "Alternatives", "portuguese": "Alternativas" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Reorder: 'a moment Just'.",
+                        "items": [
+                            { "id": "word1", "text": "Just", "order": 1 },
+                            { "id": "word2", "text": "a", "order": 2 },
+                            { "id": "word3", "text": "moment", "order": 3 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "______ me one second, I'll be right back.",
+                            "options": ["Give", "Allow", "Grant"],
+                            "correctAnswer": "Give"
+                        },
+                        {
+                            "sentence": "Let me ______ quickly. I'll get back to you.",
+                            "options": ["see", "check", "look"],
+                            "correctAnswer": "check"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-how-to-respond",
+                    "expression": "How to Respond: Of course, take your time. / No problem at all. / Sure, go ahead.",
+                    "pronunciation": "/haʊ tu rɪˈspɑnd: əv kɔrs, teɪk yʊər taɪm. / noʊ ˈprɑbləm æt ɔl. / ʃʊr, ɡoʊ əˈhɛd./",
+                    "whenToUse": "These are polite and encouraging responses when someone asks you to 'bear with them'.",
+                    "situations": [
+                        {
+                            "situation": "How to Respond",
+                            "example": "Colleague: 'Bear with me while I find the file.' You: 'Of course, take your time.'",
+                            "context": "Shows understanding and grants permission for the delay."
+                        }
+                    ],
+                    "writingPrompt": "Someone asks you to 'bear with them'. Write a polite and reassuring response.",
+                    "practicePrompt": "Record yourself saying each response with a friendly and understanding tone.",
+                    "bilingualMatches": [
+                        { "english": "Of course", "portuguese": "Claro" },
+                        { "english": "Take your time", "portuguese": "Leve o seu tempo" },
+                        { "english": "No problem at all", "portuguese": "Sem problema algum" },
+                        { "english": "Sure, go ahead", "portuguese": "Claro, pode ir em frente" },
+                        { "english": "How to respond", "portuguese": "Como responder" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Order these words: 'your time Take'.",
+                        "items": [
+                            { "id": "word1", "text": "Take", "order": 1 },
+                            { "id": "word2", "text": "your", "order": 2 },
+                            { "id": "word3", "text": "time", "order": 3 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "Of course, ______ your time.",
+                            "options": ["make", "take", "have"],
+                            "correctAnswer": "take"
+                        },
+                        {
+                            "sentence": "No ______ at all, I can wait.",
+                            "options": ["issue", "problem", "difficulty"],
+                            "correctAnswer": "problem"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-internal-check",
+                    "expression": "I need to confirm that number internally. Can you bear with me while I check with the team?",
+                    "pronunciation": "/aɪ nid tu kənˈfɜrm ðæt ˈnʌmbər ɪnˈtɜrnəli. kæn yu bɛr wɪð mi waɪl aɪ tʃɛk wɪð ðə tim/",
+                    "whenToUse": "Use this during a live call when you need to consult with colleagues or an internal system for verification.",
+                    "situations": [
+                        {
+                            "situation": "Checking Internally (Live Call)",
+                            "example": "Client: 'Is the discount still 15%?' You: 'I need to confirm that number internally. Can you bear with me while I check with the team?'",
+                            "context": "Politely requests a pause to get accurate information from an internal source."
+                        }
+                    ],
+                    "writingPrompt": "You're on a call and need to verify a detail with your manager. Write how you'd ask the caller to 'bear with you'.",
+                    "practicePrompt": "Record yourself saying the phrase with a professional, slightly formal tone.",
+                    "bilingualMatches": [
+                        { "english": "Confirm internally", "portuguese": "Confirmar internamente" },
+                        { "english": "Check with the team", "portuguese": "Verificar com a equipe" },
+                        { "english": "Live call", "portuguese": "Chamada ao vivo" },
+                        { "english": "Discount", "portuguese": "Desconto" },
+                        { "english": "Verification", "portuguese": "Verificação" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Form a question: 'Can you bear with me?'",
+                        "items": [
+                            { "id": "word1", "text": "Can", "order": 1 },
+                            { "id": "word2", "text": "you", "order": 2 },
+                            { "id": "word3", "text": "bear", "order": 3 },
+                            { "id": "word4", "text": "with", "order": 4 },
+                            { "id": "word5", "text": "me?", "order": 5 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "I need to ______ that information internally.",
+                            "options": ["verify", "confirm", "check"],
+                            "correctAnswer": "confirm"
+                        },
+                        {
+                            "sentence": "Can you bear with me while I ______ with my manager?",
+                            "options": ["talk", "check", "speak"],
+                            "correctAnswer": "check"
+                        }
+                    ]
+                },
+                {
+                    "id": "bear-with-me-longer-delays",
+                    "expression": "I won't have the final analysis until Friday. Bear with me for the next three days.",
+                    "pronunciation": "/aɪ woʊnt hæv ðə ˈfaɪnl əˈnæləsɪs ʌnˈtɪl ˈfraɪdeɪ. bɛr wɪð mi fɔr ðə nɛkst θri deɪz/",
+                    "whenToUse": "Use this for longer, more significant delays (days or weeks), setting clear expectations for when information will be available.",
+                    "situations": [
+                        {
+                            "situation": "Longer Delays (Days/Weeks)",
+                            "example": "Client: 'When will the report be ready?' You: 'I won't have the final analysis until Friday. Bear with me for the next three days.'",
+                            "context": "Manages expectations for a multi-day delay, maintaining professionalism."
+                        }
+                    ],
+                    "writingPrompt": "You need a week to complete a complex task. Inform your client, using 'bear with me' to manage their expectations.",
+                    "practicePrompt": "Record yourself saying the phrase with a clear, firm, yet polite tone, setting expectations.",
+                    "bilingualMatches": [
+                        { "english": "Final analysis", "portuguese": "Análise final" },
+                        { "english": "Until Friday", "portuguese": "Até sexta-feira" },
+                        { "english": "Next three days", "portuguese": "Próximos três dias" },
+                        { "english": "Longer delays", "portuguese": "Atrasos mais longos" },
+                        { "english": "Set expectations", "portuguese": "Definir expectativas" }
+                    ],
+                    "reorderPrompt": {
+                        "instruction": "Order these words: 'Bear with me for three days'.",
+                        "items": [
+                            { "id": "word1", "text": "Bear", "order": 1 },
+                            { "id": "word2", "text": "with", "order": 2 },
+                            { "id": "word3", "text": "me", "order": 3 },
+                            { "id": "word4", "text": "for", "order": 4 },
+                            { "id": "word5", "text": "three", "order": 5 },
+                            { "id": "word6", "text": "days", "order": 6 }
+                        ]
+                    },
+                    "fillInTheBlanks": [
+                        {
+                            "sentence": "The report will be ready ______ Friday. Bear with me.",
+                            "options": ["by", "until", "on"],
+                            "correctAnswer": "until"
+                        },
+                        {
+                            "sentence": "Please bear with me for the ______ few days.",
+                            "options": ["next", "coming", "following"],
+                            "correctAnswer": "next"
+                        }
+                    ]
                 }
-            },
-            {
-                id: 2,
-                category: "B. Technical Issues",
-                englishPhrase: "The dashboard is taking a bit longer to load today – please [[bear with me]].",
-                portugueseEquivalent: "O painel está um pouco lento hoje. Por favor, me dê um segundo (ou 'tenha paciência').",
-                context: "When technology is failing you (slow VPN, long load times, software bugs).",
-                type: "Direct Usage",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-red-400"><path d="M12 2v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="M2 12h2"/><path d="m4.9 19.1 1.4-1.4"/><path d="M12 22v-2"/><path d="m19.1 19.1-1.4-1.4"/><path d="M22 12h-2"/><path d="m19.1 4.9-1.4 1.4"/><circle cx="12" cy="12" r="7"/></svg>',
-                walkthrough: {
-                    term: "bear with me",
-                    explanation: "The core phrase itself. It means 'be patient with me' or 'wait a moment while I handle this difficulty.' It acknowledges the delay directly.",
-                    portuguese: "Literalmente 'suporte/tenha paciência comigo'. É a maneira mais direta de pedir tempo educadamente em um contexto profissional."
-                }
-            },
-            {
-                id: 3,
-                category: "C. Explaining Complexity",
-                englishPhrase: "This process has a few moving parts, so [[bear with me while I walk you through it]].",
-                portugueseEquivalent: "Este processo tem algumas etapas, então me acompanhe/me siga enquanto eu explico.",
-                context: "When you are detailing a multi-step, confusing, or new procedure.",
-                type: "Direct Usage",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-green-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
-                walkthrough: {
-                    term: "bear with me while I walk you through it",
-                    explanation: "This is a longer, more detailed request for patience. 'Walk you through it' means to guide someone step-by-step through a process.",
-                    portuguese: "'Me acompanhe enquanto eu te guio/mostro o processo passo a passo'. Sugere que a explicação levará um tempo e precisa de foco."
-                }
-            },
-            {
-                id: 4,
-                category: "D. Presentation Transition",
-                englishPhrase: "Bear with me while I [[share the correct deck]].",
-                portugueseEquivalent: "Um instante, enquanto eu passo para o próximo slide / compartilho o arquivo certo.",
-                context: "When switching between files, slides, or sharing screens.",
-                type: "Direct Usage",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-yellow-400"><path d="M12.5 17l6.5-6.5"/><path d="m12 6 6 6 6-6"/><path d="M12.5 7l-6.5 6.5"/><path d="m12 18-6-6-6 6"/></svg>',
-                walkthrough: {
-                    term: "share the correct deck",
-                    explanation: "'Deck' is common corporate slang for a presentation (usually PowerPoint or Google Slides). 'Share' refers to sharing the screen or the file itself.",
-                    portuguese: "'Deck' é um termo comum para 'apresentação'. A frase significa 'compartilhar a tela com a apresentação correta'."
-                }
-            },
-            {
-                id: 5,
-                category: "E. Alternatives (Short & Sweet)",
-                englishPhrase: "[[Just a moment]] / [[Give me one second]] / Let me check quickly / Thanks for your patience.",
-                portugueseEquivalent: "Só um instante / Me dê um segundo / Deixa eu verificar rapidinho / Obrigado(a) pela paciência.",
-                context: "More concise, professional, and often preferred alternatives for quick pauses.",
-                type: "Alternative",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-blue-400"><path d="M12 12V3"/><path d="M12 21V12"/><path d="M12 3a7 7 0 0 0 7 7c0 3-4 5-7 8s-7-5-7-8a7 7 0 0 0 7-7"/></svg>',
-                walkthrough: {
-                    term: "Just a moment / Give me one second",
-                    explanation: "These are quick, polite ways to buy 1-5 seconds of time without sounding too formal. They are excellent substitutes for 'Bear with me' in minor situations.",
-                    portuguese: "São substitutos diretos, rápidos e educados para 'Bear with me' em situações que exigem uma pausa muito breve. Amplamente usados no ambiente corporativo brasileiro ('Só um minuto', 'Segura um segundo')."
-                }
-            },
-            {
-                id: 6,
-                category: "F. How to Respond",
-                englishPhrase: "Of course, [[take your time]]. / No problem at all. / Sure, go ahead.",
-                portugueseEquivalent: "Claro, fique à vontade. / Sem problema nenhum. / Claro, pode ir.",
-                context: "The professional way to respond when someone else says 'Bear with me' to you.",
-                type: "Response",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-purple-400"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>',
-                walkthrough: {
-                    term: "take your time",
-                    explanation: "A simple, reassuring phrase that signals you are comfortable with the delay and don't feel rushed.",
-                    portuguese: "significa 'levar o tempo necessário' ou 'sem pressa'. É uma ótima forma de demonstrar paciência e profissionalismo."
-                }
-            },
-            // NEW SCENARIO 7: Checking during a call
-            {
-                id: 7,
-                category: "G. Checking Internally (Live Call)",
-                englishPhrase: "I need to confirm that number internally. Can you [[bear with me while I check with the team]]?",
-                portugueseEquivalent: "Preciso confirmar esse número internamente. Você pode me dar um momento enquanto eu checo com a equipe?",
-                context: "When you realize you need input from a colleague or a quick confirmation from another source during a meeting or live call.",
-                type: "Direct Usage",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-orange-400"><path d="M12 2c5.53 0 10 3.37 10 7 0 2.9-2.01 5.5-5 7 1.5 1 3 2.5 4 4l-1 1c-1-1.5-2.5-3-4-4-2.5 1.5-5.5 1.5-8 0-3-1.5-5-4.1-5-7C2 5.37 6.47 2 12 2z"/><path d="M12 9h.01"/><path d="M12 12v3"/></svg>',
-                walkthrough: {
-                    term: "bear with me while I check with the team",
-                    explanation: "This specifies the action causing the delay (checking with the team) and requests patience simultaneously. 'Check with the team' implies consulting an expert or checking a shared database.",
-                    portuguese: "Especifica o motivo da pausa. 'Check with the team' se traduz como 'checar/consultar a equipe/o time'. É fundamental ser transparente sobre o motivo da espera."
-                }
-            },
-            // NEW SCENARIO 8: Long-term delay
-            {
-                id: 8,
-                category: "H. Longer Delays (Days/Weeks)",
-                englishPhrase: "I won't have the final analysis until Friday. [[Bear with me for the next three days]].",
-                portugueseEquivalent: "Não terei a análise final antes de sexta-feira. Tenha paciência comigo pelos próximos três dias.",
-                context: "When the delay is measured in days or weeks, requiring a firm date to set expectations.",
-                type: "Direct Usage",
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="w-6 h-6 text-pink-400"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
-                walkthrough: {
-                    term: "Bear with me for the next three days",
-                    explanation: "When dealing with a long delay, 'bear with me' is always followed by a precise time frame (e.g., 'until Friday', 'for two weeks'). This sets a clear expectation.",
-                    portuguese: "Neste contexto, 'Bear with me' significa 'tenha paciência' ou 'aguarde'. A chave é dar uma data exata ('until Friday' = 'até sexta-feira') para gerenciar as expectativas."
-                }
+            ],
+            "metadata": {
+                "difculty": "intermediate",
+                "category": "workplace communication",
+                "tags": ["professional", "phrases", "delays", "patience", "ADHD-friendly", "portuguese"],
+                "createdDate": "2026-01-20",
+                "updatedDate": "2026-01-20"
             }
-        ];
+        };
 
-        let activeCardId = null;
-        const detailContainer = document.getElementById('detail-view-container');
-        const detailTitle = document.getElementById('detail-title');
-        const cardsContainer = document.getElementById('scenario-cards-container');
+        // Simplified Vue.js application logic (highly illustrative, not fully functional Vue)
+        // This would typically be compiled and bundled by Vite.
+        const app = document.getElementById('app');
+        if (app) {
+            // Simulate dynamic content loading based on lessonData
+            const lessonTitleElement = app.querySelector('.lesson-pill');
+            if (lessonTitleElement) {
+                lessonTitleElement.textContent = `Lesson: ${lessonData.title}`;
+            }
 
-        // --- Core UI Logic ---
+            const panelSubtitleElement = app.querySelector('.panel-subtitle');
+            if (panelSubtitleElement && lessonData.expressions.length > 0) {
+                panelSubtitleElement.textContent = lessonData.expressions[0].expression;
+            }
 
-        function formatEnglishPhrase(phrase, termToUnderline) {
-            // Handles cases where the term might contain multiple phrases separated by /
-            let formattedPhrase = phrase;
-            const terms = termToUnderline.split(' / ');
-            terms.forEach(term => {
-                // Replaces [[term]] marker with a span that contains the underline styling
-                const underlinedHtml = `<u class="decoration-yellow-400 decoration-2">${term}</u>`;
-                formattedPhrase = formattedPhrase.replace(`[[${term}]]`, underlinedHtml);
-            });
-            return formattedPhrase;
-        }
+            const expressionInput = app.querySelector('.expression-input');
+            if (expressionInput && lessonData.expressions.length > 0) {
+                expressionInput.value = lessonData.expressions[0].expression;
+            }
 
-        function renderDetailView(scenario) {
-            detailTitle.textContent = scenario.category;
-            
-            // Note: The formatEnglishPhrase function now handles multiple terms if separated by ' / '
-            const underlinedPhrase = scenario.walkthrough ? formatEnglishPhrase(scenario.englishPhrase, scenario.walkthrough.term) : scenario.englishPhrase;
-
-            // Template for the detail view
-            detailContainer.innerHTML = `
-                <div class="p-6 bg-gray-800 border-4 border-indigo-600 rounded-xl shadow-2xl transition-all duration-500">
-                    <div class="flex items-center mb-4 pb-3 border-b border-gray-700">
-                        ${scenario.icon}
-                        <h3 class="ml-3 text-2xl font-extrabold text-white">${scenario.category}</h3>
+            // Basic tab switching (manual for this static example)
+            // Updated tabs array - removed 'Practice' (original Tab 5) and re-indexed subsequent tabs
+            const tabs = [
+                { id: 1, name: 'Expression', content: `
+                    <div class="expression-content tab-content">
+                        <h2 class="tab-title">Expression <span class="emoji">💬</span></h2>
+                        <p class="tab-description">Focus on the core phrase and its meaning.</p>
+                        <div class="expression-input-wrapper">
+                            <input type="text" class="expression-input locked-text" value="${lessonData.expressions[0].expression}" readonly />
+                            <button class="lock-button">Unlock</button>
+                        </div>
+                        <div class="toast-message">
+                            <span class="pulse-dot"></span> Locked • Saved locally
+                        </div>
                     </div>
-
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Contexto</p>
-                            <p class="text-lg text-gray-100">${scenario.context}</p>
+                `},
+                { id: 2, name: 'When to Use', content: `
+                    <div class="when-to-use-content tab-content">
+                        <h2 class="tab-title">When to Use <span class="emoji">🤔</span></h2>
+                        <p class="tab-description">Understand the appropriate contexts for this expression.</p>
+                        <p class="when-to-use-text">${lessonData.expressions[0].whenToUse}</p>
+                        <div class="pronunciation-block">
+                            <span class="pronunciation-text"></span> <!-- Pronunciation text removed as requested -->
+                            <button class="play-button">Play Sound</button>
                         </div>
-                        
-                        <hr class="border-gray-700" />
-                        
-                        <div>
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">🇺🇸 A Frase em Inglês</p>
-                            <p class="text-xl font-semibold text-indigo-300 bg-indigo-900/30 p-3 rounded-lg border border-indigo-700">
-                                "${underlinedPhrase}"
-                            </p>
-                        </div>
-
-                        <div>
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">🇧🇷 Equivalente em Português</p>
-                            <p class="text-xl font-semibold text-green-300 bg-green-900/30 p-3 rounded-lg border border-green-700">
-                                "${scenario.portugueseEquivalent}"
-                            </p>
-                        </div>
-                        
-                        <!-- WALK-THROUGH REFERENCE SECTION -->
-                        ${scenario.walkthrough ? `
-                        <div class="pt-4 border-t border-gray-700">
-                            <h4 class="text-lg font-bold text-yellow-300 mb-2">Walk-through Reference: "${scenario.walkthrough.term}"</h4>
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">English Explanation</p>
-                            <p class="text-base text-gray-300 mb-3">${scenario.walkthrough.explanation}</p>
-                            
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Explicação em Português</p>
-                            <p class="text-base text-gray-300 border-l-4 border-yellow-400 pl-3 italic bg-gray-700/30 p-2 rounded-md">
-                                ${scenario.walkthrough.portuguese}
-                            </p>
-                        </div>
-                        ` : ''}
                     </div>
-                </div>
-            `;
-        }
-
-        function toggleCard(scenario) {
-            const cardElement = document.getElementById(`card-${scenario.id}`);
-            
-            // If the same card is clicked, close it
-            if (activeCardId === scenario.id) {
-                activeCardId = null;
-                cardElement.classList.remove('border-indigo-500', 'ring-4', 'ring-indigo-700/50');
-                cardElement.classList.add('border-transparent', 'hover:shadow-indigo-500/20');
-                
-                // Reset detail view
-                detailTitle.textContent = 'Select a Scenario';
-                detailContainer.innerHTML = `
-                    <div class="p-6 bg-gray-800 rounded-xl shadow-xl text-center h-full flex flex-col justify-center items-center text-gray-400 border-4 border-dashed border-gray-700 min-h-64">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="mb-3"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/></svg>
-                        <p class="font-medium">Clique em um dos cartões ao lado para iniciar a lição e ver o equivalente em Português.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            // Deselect previous card
-            if (activeCardId !== null) {
-                const prevCard = document.getElementById(`card-${activeCardId}`);
-                if (prevCard) {
-                    prevCard.classList.remove('border-indigo-500', 'ring-4', 'ring-indigo-700/50');
-                    prevCard.classList.add('border-transparent', 'hover:shadow-indigo-500/20');
-                }
-            }
-
-            // Select new card
-            activeCardId = scenario.id;
-            cardElement.classList.add('border-indigo-500', 'ring-4', 'ring-indigo-700/50');
-            cardElement.classList.remove('border-transparent', 'hover:shadow-indigo-500/20');
-
-            renderDetailView(scenario);
-        }
-
-        function renderScenarioCards() {
-            scenarios.forEach(scenario => {
-                const card = document.createElement('div');
-                card.id = `card-${scenario.id}`;
-                card.className = `p-6 bg-gray-800 rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border-t-4 border-transparent hover:shadow-indigo-500/20`;
-                
-                // Get the short preview phrase
-                let previewPhrase = scenario.englishPhrase;
-                if (scenario.walkthrough) {
-                    // Remove markers for preview text
-                    previewPhrase = previewPhrase.replace(/\[\[/g, '').replace(/\]\]/g, '');
-                }
-
-                card.innerHTML = `
-                    <div class="flex items-center space-x-4">
-                        <div class="p-3 bg-gray-700 rounded-full text-white shadow-inner">
-                            ${scenario.icon}
+                `},
+                { id: 3, name: 'Situations', content: `
+                    <div class="situations-content tab-content">
+                        <h2 class="tab-title">Situations <span class="emoji">💡</span></h2>
+                        <p class="tab-description">See real-world examples of the expression in use.</p>
+                        <div class="situations-grid">
+                            ${lessonData.expressions[0].situations.map(s => `
+                                <div class="situation-card">
+                                    <h3>${s.situation}</h3>
+                                    <p>${s.example}</p>
+                                    <p class="context">${s.context}</p>
+                                </div>
+                            `).join('')}
                         </div>
-                        <h3 class="text-xl font-bold text-gray-100 flex-grow">${scenario.category}</h3>
                     </div>
-                    <p class="mt-4 text-gray-300 italic border-l-4 border-gray-700 pl-4">
-                        ${scenario.type === 'Direct Usage' ? 'Example: ' + previewPhrase : previewPhrase}
-                    </p>
-                `;
-                
-                card.addEventListener('click', () => toggleCard(scenario));
-                cardsContainer.appendChild(card);
-            });
-        }
-        
-        // --- Advanced Exercises Logic ---
+                `},
+                { id: 4, name: 'Write', content: `
+                    <div class="write-content tab-content">
+                        <h2 class="tab-title">Write <span class="emoji">✍️</span></h2>
+                        <p class="tab-description">Practice by writing your own sentences.</p>
+                        <p class="writing-prompt">${lessonData.expressions[0].writingPrompt}</p>
+                        <textarea class="writing-textarea" placeholder="Start writing here..."></textarea>
+                        <div class="char-count">0 / 500 characters</div>
+                    </div>
+                `},
+                // Original Tab 5 (Practice) is removed. Subsequent tabs are re-indexed.
+                { id: 5, name: 'Bilingual Match', content: `
+                    <div class="tab-content">
+                        <h2 class="tab-title">Bilingual Match <span class="emoji">↔️</span></h2>
+                        <p class="tab-description">Match the English phrases with their Portuguese equivalents. (Static example)</p>
+                        <div class="match-grid">
+                            <div class="column english-column">
+                                <h3>English</h3>
+                                ${lessonData.expressions[0].bilingualMatches?.map(m => `<div class="match-card english-card">${m.english}</div>`).join('') || '<p>No matches</p>'}
+                            </div>
+                            <div class="column portuguese-column">
+                                <h3>Português</h3>
+                                ${lessonData.expressions[0].bilingualMatches?.map(m => `<div class="match-card portuguese-card">${m.portuguese}</div>`).join('') || '<p>No matches</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `},
+                { id: 6, name: 'Reorder Sequence', content: `
+                    <div class="tab-content">
+                        <h2 class="tab-title">Reorder Sequence <span class="emoji">🧩</span></h2>
+                        <p class="tab-description">Arrange the words to form a correct sentence. (Static example)</p>
+                        <div class="reorder-container">
+                            <p class="writing-prompt">${lessonData.expressions[0].reorderPrompt?.instruction || 'No reorder prompt'}</p>
+                            <div class="sentence-display">
+                                ${lessonData.expressions[0].reorderPrompt?.items.map(() => `<div class="word-slot"></div>`).join('') || ''}
+                            </div>
+                            <div class="word-options">
+                                ${lessonData.expressions[0].reorderPrompt?.items.map(item => `<div class="option-word">${item.text}</div>`).join('') || ''}
+                            </div>
+                        </div>
+                    </div>
+                `},
+                { id: 7, name: 'Fill the Blanks', content: `
+                    <div class="tab-content">
+                        <h2 class="tab-title">Fill the Blanks <span class="emoji">📝</span></h2>
+                        <p class="tab-description">Drag and drop words to complete the sentences. (Static example)</p>
+                        <div class="fill-blanks-container">
+                            ${lessonData.expressions[0].fillInTheBlanks?.map(fb => `
+                                <div class="sentence-block">
+                                    <p class="sentence-text">${fb.sentence.replace('______', '<div class="blank-box"></div>')}</p>
+                                    <div class="options-container">
+                                        ${fb.options.map(opt => `<div class="option-card">${opt}</div>`).join('')}
+                                    </div>
+                                </div>
+                            `).join('') || '<p class="no-content-message">No fill-in-the-blanks exercises available.</p>'}
+                        </div>
+                    </div>
+                `}
+            ];
 
-        const matchingData = [
-            { english: "Just a moment", portuguese: "Só um instante", id: 'ex1' },
-            { english: "I'll be right with you", portuguese: "Já te atendo", id: 'ex2' },
-            { english: "Thanks for your patience", portuguese: "Obrigado(a) pela paciência", id: 'ex3' },
-            { english: "Take your time", portuguese: "Fique à vontade", id: 'ex4' },
-            // New exercises based on new scenarios
-            { english: "Check with the team", portuguese: "Checar com a equipe", id: 'ex5' },
-            { english: "Until Friday", portuguese: "Até sexta-feira", id: 'ex6' }
-        ];
+            let activeTab = 1;
 
-        let selectedEnglish = null;
-        let selectedPortuguese = null;
-        let matchedPairs = 0;
-        const totalPairs = matchingData.length;
-
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+            // Update tab navigation buttons in the HTML
+            const tabNavigationElement = app.querySelector('.tab-navigation');
+            if (tabNavigationElement) {
+                tabNavigationElement.innerHTML = tabs.map(tab => `
+                    <button class="tab-item ${tab.id === activeTab ? 'active' : ''}">
+                        <span class="tab-number">${tab.id}</span>
+                        <span class="tab-title">${tab.name}</span>
+                    </button>
+                `).join('');
             }
-            return array;
-        }
 
-        function createButton(text, type, id) {
-            const button = document.createElement('button');
-            button.textContent = text;
-            button.dataset.id = id;
-            button.dataset.type = type;
-            button.className = 'exercise-card p-4 rounded-lg font-semibold text-left transition-all duration-200 shadow-md transform ' + 
-                                (type === 'english' ? 'bg-indigo-700 text-white hover:bg-indigo-600' : 'bg-green-700 text-white hover:bg-green-600');
-            button.addEventListener('click', handleMatchClick);
-            return button;
-        }
+            const tabItems = app.querySelectorAll('.tab-item');
+            const tabContentWrapper = app.querySelector('.tab-content-wrapper');
 
-        function handleMatchClick(event) {
-            const button = event.target;
-            const id = button.dataset.id;
-            const type = button.dataset.type;
-            const feedbackDiv = document.getElementById('matching-feedback');
-
-            if (button.disabled) return;
-
-            // Clear previous selection highlight
-            document.querySelectorAll('.border-4.border-yellow-400').forEach(el => el.classList.remove('border-4', 'border-yellow-400'));
-
-            if (type === 'english') {
-                selectedEnglish = { id, element: button };
-                button.classList.add('border-4', 'border-yellow-400');
-            } else {
-                selectedPortuguese = { id, element: button };
-                button.classList.add('border-4', 'border-yellow-400');
-            }
-
-            // Check for match
-            if (selectedEnglish && selectedPortuguese) {
-                if (selectedEnglish.id === selectedPortuguese.id) {
-                    // Match found!
-                    matchedPairs++;
-                    feedbackDiv.className = 'mt-6 text-center text-xl font-bold text-green-400';
-                    feedbackDiv.textContent = "MATCH! (" + matchedPairs + "/" + totalPairs + ")";
-
-                    selectedEnglish.element.disabled = true;
-                    selectedPortuguese.element.disabled = true;
-                    
-                    selectedEnglish.element.classList.add('bg-gray-600', 'text-gray-300', 'opacity-70', 'pointer-events-none');
-                    selectedPortuguese.element.classList.add('bg-gray-600', 'text-gray-300', 'opacity-70', 'pointer-events-none');
-                    
-                    // Remove highlight borders
-                    selectedEnglish.element.classList.remove('border-4', 'border-yellow-400', 'bg-indigo-700', 'hover:bg-indigo-600');
-                    selectedPortuguese.element.classList.remove('border-4', 'border-yellow-400', 'bg-green-700', 'hover:bg-green-600');
-
-                    if (matchedPairs === totalPairs) {
-                        feedbackDiv.textContent = "Congratulations! You mastered all the phrases! 🎉";
+            function renderTabContent(tabId) {
+                const tab = tabs.find(t => t.id === tabId);
+                if (tab) {
+                    tabContentWrapper.innerHTML = tab.content;
+                    tabItems.forEach(item => item.classList.remove('active'));
+                    // Find the correct tab item by its data-id or text content
+                    const targetTabItem = Array.from(tabItems).find(item => parseInt(item.querySelector('.tab-number').textContent) === tabId);
+                    if (targetTabItem) {
+                        targetTabItem.classList.add('active');
                     }
-
-                } else {
-                    // No match
-                    feedbackDiv.className = 'mt-6 text-center text-xl font-bold text-red-400';
-                    feedbackDiv.textContent = "Try again! That pair doesn't match.";
                 }
-
-                // Reset selection after a short delay to allow feedback to show
-                setTimeout(() => {
-                    selectedEnglish = null;
-                    selectedPortuguese = null;
-                    // Remove highlight from non-matched buttons only if not matched
-                    document.querySelectorAll('.border-4.border-yellow-400').forEach(el => el.classList.remove('border-4', 'border-yellow-400'));
-                }, 500);
             }
-        }
 
-        function renderExercises() {
-            const container = document.getElementById('matching-game-container');
-            container.innerHTML = ''; // Clear previous exercises
-            const englishColumn = document.createElement('div');
-            const portugueseColumn = document.createElement('div');
-            
-            englishColumn.className = 'flex flex-col space-y-3';
-            portugueseColumn.className = 'flex flex-col space-y-3';
-
-            // Prepare shuffled lists
-            const englishPhrases = shuffle(matchingData.map(item => ({ text: item.english, id: item.id })));
-            const portuguesePhrases = shuffle(matchingData.map(item => ({ text: item.portuguese, id: item.id })));
-
-            // Render English Column (Left)
-            englishPhrases.forEach(item => {
-                englishColumn.appendChild(createButton(item.text, 'english', item.id));
+            tabItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const tabId = parseInt(item.querySelector('.tab-number').textContent);
+                    activeTab = tabId;
+                    renderTabContent(activeTab);
+                    updateButtons();
+                });
             });
 
-            // Render Portuguese Column (Right)
-            portuguesePhrases.forEach(item => {
-                portugueseColumn.appendChild(createButton(item.text, 'portuguese', item.id));
+            const prevButton = app.querySelector('.lesson-footer .btn-secondary');
+            const nextButton = app.querySelector('.lesson-footer .btn-primary');
+            const totalTabs = tabs.length;
+
+            function updateButtons() {
+                prevButton.disabled = activeTab === 1;
+                nextButton.disabled = activeTab === totalTabs;
+            }
+
+            prevButton.addEventListener('click', () => {
+                if (activeTab > 1) {
+                    activeTab--;
+                    renderTabContent(activeTab);
+                    updateButtons();
+                }
             });
-            
-            container.appendChild(englishColumn);
-            container.appendChild(portugueseColumn);
+
+            nextButton.addEventListener('click', () => {
+                if (activeTab < totalTabs) {
+                    activeTab++;
+                    renderTabContent(activeTab);
+                    updateButtons();
+                }
+            });
+
+            // Initial render
+            renderTabContent(activeTab);
+            updateButtons();
         }
-
-        // --- Initialization ---
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderScenarioCards();
-            renderExercises();
-        });
     </script>
 </body>
 </html>
